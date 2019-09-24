@@ -42,10 +42,10 @@ exports.up = function(knex) {
       events.date("start_date").notNullable();
       events.date("end_date"); // Maybe change later to have a default value
     })
-    .createTable("user_events", user_events => {
+    .createTable("users_events", users_events => {
       // id (pk), user_id (fk - users.id), event_id (fk - events.id)
-      user_events.increments();
-      user_events
+      users_events.increments();
+      users_events
         .integer("event_id")
         .unsigned()
         .notNullable()
@@ -53,14 +53,16 @@ exports.up = function(knex) {
         .inTable("events")
         .onDelete("CASCADE") // change this?
         .onUpdate("CASCADE");
-      user_events
+      users_events
         .integer("user_id")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("user")
+        .inTable("users")
+        // .onDelete("SET NULL")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
+      users_events.unique(["event_id", "user_id"]);
     })
     .createTable("vendors", vendors => {
       // id (pk), name, type
@@ -104,7 +106,7 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("shopping_list_items")
     .dropTableIfExists("vendors")
-    .dropTableIfExists("user_events")
+    .dropTableIfExists("users_events")
     .dropTableIfExists("events")
     .dropTableIfExists("users")
     .dropTableIfExists("roles");

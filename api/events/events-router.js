@@ -39,19 +39,19 @@ router.get("/:id", Validate.validateEventId, (req, res) => {
 });
 
 // // POST /api/events/
-// router.post("/", Validate.validateEvent, (req, res) => {
-//   const event = req.body;
+router.post("/", Validate.validateEvent, (req, res) => {
+  const event = req.body;
 
-//   Events.addEvent(event)
-//     .then(newEvent => {
-//       res.status(201).json(newEvent);
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ message: "Error occurred while adding a new event.", err });
-//     });
-// });
+  Events.addEvent(event)
+    .then(newEvent => {
+      res.status(201).json(newEvent);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "Error occurred while adding a new event.", err });
+    });
+});
 
 // // PUT /api/events/:id
 // router.put(
