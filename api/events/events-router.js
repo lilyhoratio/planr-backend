@@ -54,41 +54,42 @@ router.post("/", Validate.validateEvent, (req, res) => {
 });
 
 // // PUT /api/events/:id
-// router.put(
-//   "/:id",
-//   Validate.validateEventId,
-//   Validate.validateEvent,
-//   (req, res) => {
-//     const { id } = req.params;
-//     const changes = req.body;
+router.put(
+  "/:id",
+  Validate.validateEventId,
+  Validate.validateEvent,
+  (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
 
-//     Events.updateEvent(changes, id)
-//       .then(event => {
-//         res.status(200).json(event);
-//       })
-//       .catch(err => {
-//         res
-//           .status(500)
-//           .json({ message: "Error occurred while updating event.", err });
-//       });
-//   },
-// );
+    Events.updateEvent(changes, id)
+      .then(event => {
+        res.status(200).json(event);
+      })
+      .catch(err => {
+        console.log(err);
+        res
+          .status(500)
+          .json({ message: "Error occurred while updating event.", err });
+      });
+  }
+);
 
 // // DELETE /api/events/:id
-// router.delete("/:id", Validate.validateEventId, (req, res) => {
-//   const { id } = req.params;
+router.delete("/:id", Validate.validateEventId, (req, res) => {
+  const { id } = req.params;
 
-//   Events.deleteEvent(id)
-//     .then(outcome => {
-//       res
-//         .status(200)
-//         .json({ message: `Event with the id ${id} successfully deleted.` });
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ message: "Error occurred while deleting event.", err });
-//     });
-// });
+  Events.deleteEvent(id)
+    .then(outcome => {
+      res
+        .status(200)
+        .json({ message: `Event with the id ${id} successfully deleted.` });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "Error occurred while deleting event.", err });
+    });
+});
 
 module.exports = router;

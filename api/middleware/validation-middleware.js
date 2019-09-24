@@ -38,22 +38,16 @@ function validateUniqueEmail(req, res, next) {
 function validateUser(req, res, next) {
   const user = req.body;
 
-  if (
-    !user.email ||
-    !user.name ||
-    !user.password ||
-    !user.company ||
-    !user.role
-  ) {
+  if (!user.email || !user.name || !user.password || !user.role_id) {
     res.status(400).json({
-      message: "Missing email, password, name, company, or role."
+      message: "Missing email, password, name, or role_id."
     });
   }
 
   if (Object.keys(user).length > 5) {
     res.status(400).json({
       message:
-        "A new user must have only an email, password, name, company, and role."
+        "A new user must have only an email, password, name, and role_id."
     });
   }
 
@@ -96,10 +90,11 @@ function validateLogin(req, res, next) {
 function validateEvent(req, res, next) {
   const e = req.body;
 
-  if (!e.user_id || !e.event || !e.budget || !e.start_date) {
+  // only applies when creating an item, not when updating - want to check for valid keys for put request
+  if (!e.created_by || !e.name || !e.budget || !e.start_date) {
     res
       .status(400)
-      .json({ message: "Missing user_id, event, budget, or start_date." });
+      .json({ message: "Missing created_by, name, budget, or start_date." });
   }
 
   next();
