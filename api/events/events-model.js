@@ -45,7 +45,7 @@ function getBudgetItemsByEventId(id) {
       "sli.name as budget_item_name",
       "sli.cost as budget_item_cost",
       "sli.completed as budget_item_completed",
-      "sli.quantity as budget_item_completed"
+      "sli.quantity as budget_item_quantity"
       // "e.name as event_name"
     )
     .join("events AS e", {

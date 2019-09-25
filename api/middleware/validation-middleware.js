@@ -95,7 +95,9 @@ function validateEvent(req, res, next) {
   if (!e.created_by || !e.name || !e.budget || !e.start_date) {
     res
       .status(400)
-      .json({ message: "Missing created_by, name, budget, or start_date." });
+      .json({
+        message: "Missing created_by, name, budget, or start_date of event."
+      });
   }
 
   next();
@@ -128,11 +130,9 @@ function validateBudgetItem(req, res, next) {
 
   // only applies when creating an item, not when updating - want to check for valid keys for put request
   if (!item.name || !item.cost || !item.completed || !item.event_id) {
-    res
-      .status(400)
-      .json({
-        message: "Missing name, cost, completed, or event_id of budget item."
-      });
+    res.status(400).json({
+      message: "Missing name, cost, completed, or event_id of budget item."
+    });
   }
 
   next();

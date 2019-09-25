@@ -6,6 +6,38 @@ const Validate = require("../middleware/validation-middleware.js");
 const router = express.Router();
 
 // GET /api/events
+
+/**
+ * @api {get} /events Get Events Information
+ * @apiName GetEvents
+ * @apiGroup Events
+ *
+ * @apiSuccess {Object[]} events Array of events
+ *
+ * @apiSuccessExample Succesful Response:
+ * HTTP/1.1 200 OK
+ *  [{
+ *  "id": 2,
+ *  "created_by": 1,
+ *  "name": "Company luncheon",
+ *  "description": "A company-wide lunch",
+ *  "budget": 12320,
+ *  "location": "Courtyard near the lobby",
+ *  "start_date": "2019-02-15",
+ *  "end_date": null
+ *  },
+ *  {
+ *  "id": 3,
+ *  "created_by": 1,
+ *  "name": "Surprise Birthday",
+ *  "description": "A surprise birthday party for the ceo",
+ *  "budget": 2210,
+ *  "location": "Banquet room",
+ *  "start_date": "2019-03-04",
+ *  "end_date": "2019-03-05"
+ *  }]
+ */
+
 router.get("/", (req, res) => {
   Events.getEvents()
     .then(events => {
@@ -18,6 +50,24 @@ router.get("/", (req, res) => {
         .json({ message: "Error occurred while getting all events.", err });
     });
 });
+
+/**
+ * @api {get} /events Get Events Information
+ * @apiName GetEvents
+ * @apiGroup Events
+ *
+ * @apiSuccess {Number} id Event id
+ * @apiSuccess {Number} created_by Created by user id
+ * @apiSuccess {String} name Event name
+ * @apiSuccess {Decimal} budget Event budget
+ * @apiSuccess {String} location Event location
+ * @apiSuccess {Date} start_date Event start date
+ * @apiSuccess {Date} end_date Event end date
+ *
+ * @apiSuccessExample Succesful Response:
+ * HTTP/1.1 200 OK
+ *
+ */
 
 // GET /api/events/:id
 router.get("/:id", Validate.validateEventId, (req, res) => {
