@@ -11,7 +11,6 @@ module.exports = {
 };
 
 function getEvents() {
-  // v1 - just events
   return db("events");
 }
 

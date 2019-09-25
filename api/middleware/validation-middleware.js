@@ -9,7 +9,8 @@ module.exports = {
   validateUserId,
   validateLogin,
   validateEvent,
-  validateEventId
+  validateEventId,
+  validateBudgetItem
 };
 
 // ================ VALIDATION FOR USERS ROUTER ================
@@ -122,3 +123,17 @@ function validateEventId(req, res, next) {
 }
 
 // ================ VALIDATION FOR ITEMS ROUTER ================
+function validateBudgetItem(req, res, next) {
+  const item = req.body;
+
+  // only applies when creating an item, not when updating - want to check for valid keys for put request
+  if (!item.name || !item.cost || !item.completed || !item.event_id) {
+    res
+      .status(400)
+      .json({
+        message: "Missing name, cost, completed, or event_id of budget item."
+      });
+  }
+
+  next();
+}
