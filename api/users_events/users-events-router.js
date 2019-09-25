@@ -14,15 +14,13 @@ router.get(`/`, Auth.restricted, (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res
-        .status(500)
-        .json({
-          message: "Error occurred while getting all user events.",
-          err
-        });
+      res.status(500).json({
+        message: "Error occurred while getting all user events.",
+        err
+      });
     });
 });
 
-// req.user.id
+// GET events users - event info with array of user names & emails
 
 module.exports = router;

@@ -92,4 +92,20 @@ router.delete("/:id", Validate.validateEventId, (req, res) => {
     });
 });
 
+// // GET /api/events/:id/budget-items
+router.get("/:id/budget-items", Validate.validateEventId, (req, res) => {
+  const { id } = req.params;
+
+  Events.getBudgetItemsByEventId(id)
+    .then(budgetItems => {
+      res.status(200).json(budgetItems);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: "Error occurred while getting budget items by event id.",
+        err
+      });
+    });
+});
+
 module.exports = router;
