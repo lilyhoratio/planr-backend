@@ -5,6 +5,7 @@ module.exports = {
   getEventsBy,
   getEventById,
   getBudgetItemsByEventId,
+  getVendorsByEventId,
   getEvents,
   updateEvent,
   deleteEvent
@@ -19,7 +20,7 @@ function getEventsBy(filter) {
 }
 
 function getEventById(id) {
-  // v1 - just event
+  // v1 - just event table info
   // return db("events")
   //   .where({ id })
   //   .first();
@@ -29,27 +30,35 @@ function getEventById(id) {
     .where({ id })
     .first();
   const budgetItemsQuery = getBudgetItemsByEventId(id);
+  const vendorsQuery = getVendorsByEventId(id);
 
-  return Promise.all([eventQuery, budgetItemsQuery]).then(
-    ([event, budgetItems]) => {
+  return Promise.all([eventQuery, budgetItemsQuery, vendorsQuery]).then(
+    ([event, budgetItems, vendors]) => {
+      console.log(budgetItems);
       event.budgetItems = budgetItems;
+      event.vendors = vendors;
       return event;
     }
   );
 }
 
-// shopping list items
 function getBudgetItemsByEventId(id) {
   return db("shopping_list_items AS sli")
-    .select(
-      "sli.name as budget_item_name",
-      "sli.cost as budget_item_cost",
-      "sli.completed as budget_item_completed",
-      "sli.quantity as budget_item_quantity"
-      // "e.name as event_name"
-    )
+    .select("sli.name", "sli.cost", "sli.completed", "sli.quantity")
     .join("events AS e", {
       "e.id": "sli.event_id"
+    })
+    .where({ event_id: id });
+}
+
+function getVendorsByEventId(id) {
+  return db("events AS e")
+    .select("v.id", "v.name", "v.type")
+    .join("shopping_list_items AS sli", {
+      "e.id": "sli.event_id"
+    })
+    .leftJoin("vendors AS v", {
+      "v.id": "sli.vendor_id"
     })
     .where({ event_id: id });
 }

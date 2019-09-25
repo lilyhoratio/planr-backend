@@ -10,34 +10,34 @@ module.exports = {
 };
 
 function getItems() {
-  return db("items");
+  return db("shopping_list_items");
 }
 
 function getItemsBy(filter) {
-  return db("items").where(filter);
+  return db("shopping_list_items").where(filter);
 }
 
 function getItemById(id) {
-  return db("items")
+  return db("shopping_list_items")
     .where({ id })
     .first();
 }
 
 function addItem(item) {
-  return db("items")
+  return db("shopping_list_items")
     .insert(item, "id")
     .then(([id]) => getItemById(id));
 }
 
 function updateItem(changes, id) {
-  return db("items")
+  return db("shopping_list_items")
     .where("id", id)
     .update(changes)
     .then(outcome => getItemById(id));
 }
 
 function deleteItem(id) {
-  return db("items")
+  return db("shopping_list_items")
     .where("id", id)
     .del();
 }

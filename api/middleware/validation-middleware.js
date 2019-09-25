@@ -70,6 +70,7 @@ function validateUserId(req, res, next) {
       }
     })
     .catch(err => {
+      console.log(err);
       res
         .status(500)
         .json({ message: "Error occurred while getting a user by id.", err });
@@ -93,11 +94,9 @@ function validateEvent(req, res, next) {
 
   // only applies when creating an item, not when updating - want to check for valid keys for put request
   if (!e.created_by || !e.name || !e.budget || !e.start_date) {
-    res
-      .status(400)
-      .json({
-        message: "Missing created_by, name, budget, or start_date of event."
-      });
+    res.status(400).json({
+      message: "Missing created_by, name, budget, or start_date of event."
+    });
   }
 
   next();
@@ -118,6 +117,7 @@ function validateEventId(req, res, next) {
       }
     })
     .catch(err => {
+      console.log(err);
       res
         .status(500)
         .json({ message: "Error occurred while getting an event by id.", err });

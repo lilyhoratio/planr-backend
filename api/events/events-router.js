@@ -1,11 +1,7 @@
 const express = require("express");
-
 const Events = require("./events-model.js");
 const Validate = require("../middleware/validation-middleware.js");
-
 const router = express.Router();
-
-// GET /api/events
 
 /**
  * @api {get} /events Get Events Information
@@ -14,28 +10,30 @@ const router = express.Router();
  *
  * @apiSuccess {Object[]} events Array of events
  *
- * @apiSuccessExample Succesful Response:
+ * @apiSuccessExample Successful Response:
  * HTTP/1.1 200 OK
- *  [{
- *  "id": 2,
- *  "created_by": 1,
- *  "name": "Company luncheon",
- *  "description": "A company-wide lunch",
- *  "budget": 12320,
- *  "location": "Courtyard near the lobby",
- *  "start_date": "2019-02-15",
- *  "end_date": null
- *  },
- *  {
- *  "id": 3,
- *  "created_by": 1,
- *  "name": "Surprise Birthday",
- *  "description": "A surprise birthday party for the ceo",
- *  "budget": 2210,
- *  "location": "Banquet room",
- *  "start_date": "2019-03-04",
- *  "end_date": "2019-03-05"
- *  }]
+ * [
+ *   {
+ *     "id": 1,
+ *     "created_by": 1,
+ *     "name": "Company Party",
+ *     "description": "A company-wide party to celebrate acquisition.",
+ *     "budget": 23230,
+ *     "location": "Building A, Room 232",
+ *     "start_date": "2019-01-21",
+ *     "end_date": "2019-01-23"
+ *   },
+ *   {
+ *     "id": 2,
+ *     "created_by": 1,
+ *     "name": "Company luncheon",
+ *     "description": "A company-wide lunch",
+ *     "budget": 12320,
+ *     "location": "Courtyard near the lobby",
+ *     "start_date": "2019-02-15",
+ *     "end_date": null
+ *   },
+ * ]
  */
 
 router.get("/", (req, res) => {
@@ -52,8 +50,8 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @api {get} /events Get Events Information
- * @apiName GetEvents
+ * @api {get} /events/:id Get Event Information
+ * @apiName GetEvent
  * @apiGroup Events
  *
  * @apiSuccess {Number} id Event id
@@ -64,15 +62,50 @@ router.get("/", (req, res) => {
  * @apiSuccess {Date} start_date Event start date
  * @apiSuccess {Date} end_date Event end date
  *
- * @apiSuccessExample Succesful Response:
+ * @apiSuccessExample Successful Response:
  * HTTP/1.1 200 OK
- *
+ * {
+ * "id": 3,
+ * "created_by": 1,
+ * "name": "Surprise Birthday",
+ * "description": "A surprise birthday party for the ceo",
+ * "budget": 2210,
+ * "location": "Banquet room",
+ * "start_date": "2019-03-04",
+ * "end_date": "2019-03-05",
+ * "budgetItems": [
+ *    {
+ *     "name": "Rental buses",
+ *      "cost": 300,
+ *      "completed": false,
+ *      "quantity": 10
+ *    },
+ *    {
+ *      "name": "Lobby rental",
+ *      "cost": 800,
+ *      "completed": true,
+ *      "quantity": 1
+ *   }
+ * ],
+ * "vendors": [
+ *    {
+ *      "id": 1,
+ *      "name": "Catering Co.",
+ *      "type": "Food & Beverage"
+ *    },
+ *    {
+ *      "id": 2,
+ *      "name": "Fairfax Hotel",
+ *      "type": "Lodging"
+ *    }
+ * ]
+ * }
  */
 
-// GET /api/events/:id
 router.get("/:id", Validate.validateEventId, (req, res) => {
   const { id } = req.params;
 
+  // goes into catch when querying for event that doesn't exist
   Events.getEventById(id)
     .then(event => {
       if (event) {
