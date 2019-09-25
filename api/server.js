@@ -6,6 +6,7 @@ const helmet = require("helmet");
 // Routes
 const eventsRouter = require("./events/events-router.js");
 const usersRouter = require("./users/users-router.js");
+const usersEventsRouter = require("./users_events/users-events-router.js");
 
 const server = express();
 
@@ -15,14 +16,7 @@ server.use(cors());
 
 server.use(`/api/events`, eventsRouter);
 server.use(`/api/users`, usersRouter);
-
-// STRETCH - EVENTS BY USER
-
-const Events = require("./events/events-model");
-const Validate = require("./middleware/auth-middleware.js");
-// GET /api/users/events - all events by users/events - decode token in middleware
-// req.user.id
-// server.get(`/api/users/events/`);
+server.use(`/api/users-events`, usersEventsRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "Server up and running!" });
