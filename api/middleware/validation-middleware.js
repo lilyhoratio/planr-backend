@@ -1,4 +1,4 @@
-// const Users = require("../users/users-model.js");
+const Users = require("../users/users-model.js");
 const Events = require("../events/events-model.js");
 // const Items = require("../items/items-model.js");
 // const Vendors = require("../vendors/vendors-model.js");

@@ -24,15 +24,16 @@ router.post(
         res.status(201).json({
           message: `Welcome ${newUser.name}!`,
           user_id: newUser.id,
-          token,
+          token
         });
       })
       .catch(err => {
+        console.log(err);
         res
           .status(500)
           .json({ message: "Error occurred while registering a user.", err });
       });
-  },
+  }
 );
 
 // POST /api/users/login
@@ -48,7 +49,7 @@ router.post("/login", (req, res) => {
         res.status(200).json({
           message: `Welcome ${user.name}!`,
           user_id: user.id,
-          token,
+          token
         });
       } else {
         res.status(401).json({ message: "Invalid credentials." });
@@ -101,7 +102,7 @@ router.put(
           .status(500)
           .json({ message: "Error occurred while updating user.", err });
       });
-  },
+  }
 );
 
 // DELETE /api/user/:id

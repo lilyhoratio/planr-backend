@@ -3,7 +3,7 @@ const secrets = require("../../config/secrets.js");
 
 module.exports = {
   restricted,
-  generateToken,
+  generateToken
 };
 
 function restricted(req, res, next) {
@@ -16,6 +16,7 @@ function restricted(req, res, next) {
       } else {
         req.user = {
           email: decodedToken.email,
+          id: decodedToken.id
         };
         next();
       }
@@ -28,10 +29,11 @@ function restricted(req, res, next) {
 function generateToken(user) {
   const payload = {
     email: user.email,
+    id: user.id
   };
 
   const options = {
-    expiresIn: "1d",
+    expiresIn: "1d"
   };
 
   return jwt.sign(payload, secrets.jwtSecret, options);

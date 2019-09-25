@@ -10,7 +10,7 @@ module.exports = {
 };
 
 function getUsers() {
-  return db("users").select("id", "name", "email", "company", "role");
+  return db("users").select("id", "name", "email", "role_id");
 }
 
 function getUsersBy(filter) {
@@ -20,7 +20,7 @@ function getUsersBy(filter) {
 function getUserById(id) {
   return db("users")
     .where({ id })
-    .select("id", "name", "email", "company", "role")
+    .select("id", "name", "email", "role_id")
     .first();
 }
 
