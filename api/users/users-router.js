@@ -7,7 +7,33 @@ const Validate = require("../middleware/validation-middleware.js");
 
 const router = express.Router();
 
-// POST /api/users/register
+/**
+ * @api {post} /users/register Register user
+ * @apiName Auth - Register User
+ * @apiGroup Auth
+ *
+ * @apiParam {String} email email, must be unique
+ * @apiParam {String} password password
+ *
+ * @apiParamExample Example body:
+ * {
+ *   "email": "janedoe@example.com",
+ *   "password": "thisisabadpassword",
+ * }
+ *
+ * @apiSuccess (201) {String} message welcome message
+ * @apiSuccess (201) {Integer} user_id user's id
+ * @apiSuccess (201) {String} token JSON web token
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 201 CREATED
+ *   {
+ *      "message": "Welcome Jane Doe!",
+ *      "user_id": 3,
+ *      "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjkzMDA3NTUsImV4cCI6MTU2OTM4NzE1NX0.MqSP9WknoX-hqVuhPxcqgeMDUyt9DA4nU34OjTQLo2k"
+ *   }
+ */
+
 router.post(
   "/register",
   Validate.validateUniqueEmail,
@@ -36,7 +62,45 @@ router.post(
   }
 );
 
-// POST /api/users/login
+/**
+ * @api {post} /users/login Login user
+ * @apiName Auth - Login User
+ * @apiGroup Auth
+ *
+ * @apiParam {String} email email, must be unique
+ * @apiParam {String} password password
+ * @apiParam {String} name name
+ * @apiParam {Integer} role_id user's role_id
+ *
+ * @apiParamExample Example body:
+ * {
+ *   "email": "janedoe@example.com",
+ *   "password": "thisisabadpassword",
+ *   "name": "Jane Doe",
+ *   "role_id": 3
+ * }
+ *
+ * @apiSuccess {String} message welcome message
+ * @apiSuccess {Integer} user_id user's id
+ * @apiSuccess {String} token JSON web token
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 200 OK
+ *   {
+ *      "message": "Welcome Jane Doe!",
+ *      "user_id": 3,
+ *      "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjkzMDA3NTUsImV4cCI6MTU2OTM4NzE1NX0.MqSP9WknoX-hqVuhPxcqgeMDUyt9DA4nU34OjTQLo2k"
+ *   }
+ *
+ * @apiError {404} UnauthorizedUser The user's credentials are invalid
+ *
+ * @apiErrorExample Error-Example
+ * HTTP/1.1 404 Unauthorized
+ * {
+ *   "message": "Invalid credentials."
+ * }
+ */
+
 router.post("/login", (req, res) => {
   let { email, password } = req.body;
 
@@ -62,7 +126,32 @@ router.post("/login", (req, res) => {
     });
 });
 
-// GET /api/users
+/**
+ * @api {get} /users Get users
+ * @apiName GetUsers
+ * @apiGroup Users
+ *
+ * @apiSuccess {Object[]} events Array of users
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 200 OK
+ *
+ * [
+ *   {
+ *     "id": 1,
+ *     "name": "John Smith",
+ *     "email": "john@test.com",
+ *     "role_id": 1
+ *   },
+ *   {
+ *     "id": 2,
+ *     "name": "Jane Doe",
+ *     "email": "jane@test.com",
+ *     "role_id": 1
+ *   }
+ * ]
+ */
+
 router.get("/", Auth.restricted, (req, res) => {
   Users.getUsers()
     .then(users => {
@@ -74,6 +163,38 @@ router.get("/", Auth.restricted, (req, res) => {
         .json({ message: "Error occurred while getting all users.", err });
     });
 });
+
+/**
+ * @api {get} /users Get user (expanded) by id
+ * @apiName GetUser
+ * @apiGroup Users
+ *
+ * @apiSuccess {Integer} id user id
+ * @apiSuccess {String} name user's name
+ * @apiSuccess {String} email user's email
+ * @apiSuccess {Integer} role_id user's role_id
+ * @apiSuccess {Object[]} createdEvents Array of events created by the user
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 200 OK
+ *  {
+ *   "id": 1,
+ *   "name": "John Smith",
+ *   "email": "john@test.com",
+ *   "role_id": 1,
+ *   "role_name": "admin",
+ *   "createdEvents": [
+ *     {
+ *       "event_id": 1,
+ *       "event_name": "Company Party"
+ *     },
+ *     {
+ *       "event_id": 3,
+ *       "event_name": "Surprise Birthday"
+ *     }
+ *   ]
+ * }
+ */
 
 // GET /api/users/:id
 router.get("/:id", Auth.restricted, Validate.validateUserId, (req, res) => {
@@ -110,7 +231,7 @@ router.delete("/:id", Auth.restricted, Validate.validateUserId, (req, res) => {
   const { id } = req.params;
 
   Users.deleteUser(id)
-    .then(outcome => {
+    .then(_ => {
       res
         .status(200)
         .json({ message: `User with the id ${id} successfully deleted.` });

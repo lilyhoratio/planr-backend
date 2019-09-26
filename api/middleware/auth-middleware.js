@@ -12,6 +12,7 @@ function restricted(req, res, next) {
   if (token) {
     jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
       if (err) {
+        console.log(err);
         res.status(401).json({ message: "Credentials are invalid." });
       } else {
         req.user = {

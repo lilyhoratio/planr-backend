@@ -9,8 +9,17 @@ module.exports = {
   deleteItem
 };
 
-function getItems() {
-  return db("shopping_list_items");
+function getItems(options) {
+  let query = db("shopping_list_items");
+  if (options.limit) {
+    query = query.limit(parseInt(options.limit, 10));
+  }
+
+  if (options.sortBy) {
+    query = query.orderBy(options.sortBy, options.sortDir || "DESC");
+  }
+
+  return query;
 }
 
 function getItemsBy(filter) {

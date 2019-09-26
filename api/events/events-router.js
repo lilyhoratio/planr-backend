@@ -4,7 +4,7 @@ const Validate = require("../middleware/validation-middleware.js");
 const router = express.Router();
 
 /**
- * @api {get} /events Get Events Information
+ * @api {get} /events Get events
  * @apiName GetEvents
  * @apiGroup Events
  *
@@ -50,17 +50,19 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @api {get} /events/:id Get Event Information
+ * @api {get} events/:id Get event (expanded) by id
  * @apiName GetEvent
  * @apiGroup Events
  *
- * @apiSuccess {Number} id Event id
- * @apiSuccess {Number} created_by Created by user id
- * @apiSuccess {String} name Event name
- * @apiSuccess {Decimal} budget Event budget
- * @apiSuccess {String} location Event location
- * @apiSuccess {Date} start_date Event start date
- * @apiSuccess {Date} end_date Event end date
+ * @apiSuccess {Number} id event id
+ * @apiSuccess {Number} created_by created by user id
+ * @apiSuccess {String} name event name
+ * @apiSuccess {Decimal} budget event budget
+ * @apiSuccess {String} location event location
+ * @apiSuccess {Date} start_date event start date
+ * @apiSuccess {Date} end_date event end date, can be null
+ * @apiSuccess {Object[]} events Array of budgetItems
+ * @apiSuccess {Object[]} vendors Array of vendors
  *
  * @apiSuccessExample Successful Response:
  * HTTP/1.1 200 OK
@@ -105,14 +107,9 @@ router.get("/", (req, res) => {
 router.get("/:id", Validate.validateEventId, (req, res) => {
   const { id } = req.params;
 
-  // goes into catch when querying for event that doesn't exist
   Events.getEventById(id)
     .then(event => {
-      if (event) {
-        res.status(200).json(event);
-      } else {
-        res.status(404).json({ message: `No event with the id ${id} found.` });
-      }
+      res.status(200).json(event);
     })
     .catch(err => {
       res

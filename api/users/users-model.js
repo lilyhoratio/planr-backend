@@ -18,9 +18,37 @@ function getUsersBy(filter) {
 }
 
 function getUserById(id) {
-  return db("users")
+  const userQuery = getUsers()
     .where({ id })
-    .select("id", "name", "email", "role_id")
+    .first();
+
+  const roleQuery = getRoleByUserId(id);
+  const eventsQuery = getEventsCreatedbyUserId(id);
+  return Promise.all([userQuery, roleQuery, eventsQuery]).then(
+    ([user, role, createdEvents]) => {
+      if (user) {
+        user.role_name = role.role_name;
+        user.createdEvents = createdEvents;
+        return user;
+      } else {
+        return null;
+      }
+    }
+  );
+}
+
+function getEventsCreatedbyUserId(id) {
+  return db("users AS u")
+    .select("e.id as event_id", "e.name as event_name")
+    .leftJoin("events AS e", { "e.created_by": "u.id" })
+    .where({ "u.id": id });
+}
+
+function getRoleByUserId(id) {
+  return db("users AS u")
+    .select("r.name AS role_name")
+    .join("roles AS r", { "r.id": "u.role_id" })
+    .where({ "u.id": id })
     .first();
 }
 
@@ -34,7 +62,7 @@ function updateUser(changes, id) {
   return db("users")
     .where("id", id)
     .update(changes)
-    .then(outcome => getUserById(id));
+    .then(_ => getUserById(id));
 }
 
 function deleteUser(id) {

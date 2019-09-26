@@ -4,7 +4,7 @@
   "description": "API documentation for Planr backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env DB_ENV=testing jest --watch --runInBand",
     "start": "node index.js",
     "server": "nodemon index.js",
     "docs": "npx apidoc -i ./ -e node_modules -o ./docs"

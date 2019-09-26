@@ -1,13 +1,44 @@
 const express = require("express");
-
 const Items = require("./items-model.js");
 const Validate = require("../middleware/validation-middleware.js");
 
 const router = express.Router();
 
-// GET /api/items
+/**
+ * @api {get} /budget-items?limit={input}&sortBy={input}&sortDir={input} Get budget items
+ * @apiName GetBudgetItems
+ * @apiGroup Budget Items
+ *
+ * @apiSuccess {Object[]} budget-items Array of budget items (dynamically queried based on optional query param inputs)
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 200 OK (GET /api/budget-items?limit=2&sortBy=name&sortDir=asc)
+ * [
+ *   {
+ *     "id": 5,
+ *     "name": "Burritos",
+ *     "quantity": 30,
+ *     "cost": 10,
+ *     "completed": false,
+ *     "event_id": 3,
+ *     "vendor_id": 2
+ *   },
+ *   {
+ *     "id": 3,
+ *     "name": "Business catering package",
+ *     "quantity": 1,
+ *     "cost": 600,
+ *     "completed": false,
+ *     "event_id": 1,
+ *     "vendor_id": 2
+ *   }
+ * ]
+ */
+
 router.get("/", (req, res) => {
-  Items.getItems()
+  console.log(req.query);
+  const { limit, sortBy, sortDir } = req.query;
+  Items.getItems({ limit, sortBy, sortDir })
     .then(items => {
       let formattedItems = items.map(item => {
         return {

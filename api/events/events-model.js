@@ -25,7 +25,7 @@ function getEventById(id) {
   //   .where({ id })
   //   .first();
 
-  // v2 - event has budget items array
+  // v2 - event has budget items and vendors list
   const eventQuery = db("events")
     .where({ id })
     .first();
@@ -34,18 +34,21 @@ function getEventById(id) {
 
   return Promise.all([eventQuery, budgetItemsQuery, vendorsQuery]).then(
     ([event, budgetItems, vendors]) => {
-      console.log(budgetItems);
-      event.budgetItems = budgetItems;
-      event.vendors = vendors;
-      return event;
+      if (event) {
+        event.budgetItems = budgetItems;
+        event.vendors = vendors;
+        return event;
+      } else {
+        return null;
+      }
     }
   );
 }
 
 function getBudgetItemsByEventId(id) {
-  return db("shopping_list_items AS sli")
+  return db("events as e")
     .select("sli.name", "sli.cost", "sli.completed", "sli.quantity")
-    .join("events AS e", {
+    .leftJoin("shopping_list_items AS sli", {
       "e.id": "sli.event_id"
     })
     .where({ event_id: id });
@@ -54,7 +57,7 @@ function getBudgetItemsByEventId(id) {
 function getVendorsByEventId(id) {
   return db("events AS e")
     .select("v.id", "v.name", "v.type")
-    .join("shopping_list_items AS sli", {
+    .leftJoin("shopping_list_items AS sli", {
       "e.id": "sli.event_id"
     })
     .leftJoin("vendors AS v", {
@@ -73,7 +76,7 @@ function updateEvent(changes, id) {
   return db("events")
     .where("id", id)
     .update(changes)
-    .then(outcome => getEventById(id));
+    .then(_ => getEventById(id));
 }
 
 function deleteEvent(id) {
