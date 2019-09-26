@@ -5,11 +5,26 @@ const Validate = require("../middleware/validation-middleware.js");
 const router = express.Router();
 
 /**
- * @api {get} /budget-items?limit={input}&sortBy={input}&sortDir={input} Get budget items
+ * @api {get} /budget-items Get budget items
  * @apiName GetBudgetItems
  * @apiGroup Budget Items
  *
- * @apiSuccess {Object[]} budget-items Array of budget items (dynamically queried based on optional query param inputs)
+ * @apiParam (Query string) {Integer} limit Provide limit count to rows.
+ * @apiParam (Query string) {String} sortBy Sort rows by column specified.
+ * @apiParam (Query string) {String} sortDir Order rows by ascending (ASC) or descending (DESC) by default.
+ * @apiParam (Query string) {Example} EXAMPLE
+ * ```
+ * /budget-items?limit=5&sortDir=ASC&sortBy=cost
+ * ```
+ * Queries budget_items as follows:
+ * ```
+ * SELECT *
+ * FROM budget_items
+ * ORDER BY cost ASC
+ * LIMIT 5
+ * ```
+ *
+ * @apiSuccess {Object[]} budget-items Array of budget items (dynamically queried based on query params)
  *
  * @apiSuccessExample Successful Response:
  * HTTP/1.1 200 OK (GET /api/budget-items?limit=2&sortBy=name&sortDir=asc)
