@@ -9,14 +9,14 @@ const router = express.Router();
  * @apiName GetBudgetItems
  * @apiGroup Budget Items
  *
- * @apiParam (Query string) {Integer} limit Provide limit count to rows.
+ * @apiParam (Query string) {Integer} limit Limit count to rows.
  * @apiParam (Query string) {String} sortBy Sort rows by column specified.
  * @apiParam (Query string) {String} sortDir Order rows by ascending (ASC) or descending (DESC) by default.
  * @apiParam (Query string) {Example} EXAMPLE
  * ```
  * /budget-items?limit=5&sortDir=ASC&sortBy=cost
  * ```
- * Queries budget_items as follows:
+ * Queries budget_items table as follows:
  * ```
  * SELECT *
  * FROM budget_items

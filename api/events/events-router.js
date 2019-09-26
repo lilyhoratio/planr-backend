@@ -188,4 +188,43 @@ router.get("/:id/budget-items", Validate.validateEventId, (req, res) => {
     });
 });
 
+/**
+ * @api {get} events/:id/budget-items-cost Get event budget item metrics by event id
+ * @apiName GetEventBudgetItemsCosts
+ * @apiGroup Events
+ *
+ * @apiSuccess {Number} id event id
+ * @apiSuccess {Number} sum_total_items_cost total cost of all budget items on event
+ * @apiSuccess {Number} sum_completed_items_cost cost of completed (true) budget items
+ * @apiSuccess {Number} sum_remaining_items_cost cost of competed (false) budget items
+ *
+ * @apiSuccessExample Successful Response:
+ * HTTP/1.1 200 OK
+ *
+ * {
+ *   "event_id": "3",
+ *   "sum_items_cost": 3310,
+ *   "sum_completed_items_cost": 0,
+ *   "sum_remaining_items_cos": 3310
+ * }
+ */
+
+// ANALYTICS
+router.get(`/:id/budget-items-cost`, (req, res) => {
+  const { id } = req.params;
+
+  Events.getBudgetItemsCostByEventId(id)
+    .then(cost => {
+      res.status(200).json(cost);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message:
+          "Error occurred while getting total cost of budget items by event id",
+        err
+      });
+    });
+});
+
 module.exports = router;

@@ -40,13 +40,13 @@ function validateUser(req, res, next) {
   const user = req.body;
 
   if (!user.email || !user.name || !user.password || !user.role_id) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Missing email, password, name, or role_id."
     });
   }
 
-  if (Object.keys(user).length > 5) {
-    res.status(400).json({
+  if (Object.keys(user).length > 4) {
+    return res.status(400).json({
       message:
         "A new user must have only an email, password, name, and role_id."
     });
@@ -81,7 +81,7 @@ function validateLogin(req, res, next) {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({ message: "Missing email or password." });
+    return res.status(400).json({ message: "Missing email or password." });
   }
 
   next();
@@ -94,7 +94,7 @@ function validateEvent(req, res, next) {
 
   // only applies when creating an item, not when updating - want to check for valid keys for put request
   if (!e.created_by || !e.name || !e.budget || !e.start_date) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Missing created_by, name, budget, or start_date of event."
     });
   }
@@ -130,7 +130,7 @@ function validateBudgetItem(req, res, next) {
 
   // only applies when creating an item, not when updating - want to check for valid keys for put request
   if (!item.name || !item.cost || !item.completed || !item.event_id) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Missing name, cost, completed, or event_id of budget item."
     });
   }

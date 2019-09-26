@@ -2,7 +2,7 @@
 
 ---
 
-Deployed Backend (change later): [http://localhost:8000/](http://localhost:8000/)
+The server is hosted at: [https://planr-backend.herokuapp.com/](https://planr-backend.herokuapp.com/)
 
 ## Built With
 
@@ -28,30 +28,7 @@ Deployed Backend (change later): [http://localhost:8000/](http://localhost:8000/
 
 ### General
 
-###### GET [API RUNNING]
-
-```
-http://localhost:8000/
-```
-
-- JWT protected (header) :x:
-- payload (body) :x:
-
-<span style="color: green">API Running Response (200 OK)</span>:
-
-```json
-{
-  "message": "Server up and running!"
-}
-```
-
-### Users
-
-###### GET [ALL USERS]
-
-```
 http://localhost:8000/api/users
-```
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :x:
@@ -101,34 +78,4 @@ http://localhost:8000/api/users/:id
 - USER ID gets validated over validateUserId middleware - extra responses below
 - No passwords are returned they are not even stored in the database directly
 
-<span style="color: green">Get All Users Response (200 OK)</span>:
-
-```json
-{
-  "id": 1,
-  "name": "John Smith",
-  "email": "test@example.com",
-  "company": "Tester Inc.",
-  "role": "tester"
-}
-```
-
-<span style="color: red">Server error Response (500 SERVER ERROR)</span>:
-
-```json
-{
-  "message": "Error occurred while getting user by id.",
-  err
-}
-```
-
-## Authors
-
-**Role: Backend Developer**
-
-- **[Kevin Tou](https://github.com/KevinTou)**
-- **[Lily Zhou](https://github.com/lilyhoratio)**
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+ApiDocs: [http://localhost:8000/docs/](http://localhost:8000/docs/)

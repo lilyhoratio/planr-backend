@@ -8,7 +8,9 @@ module.exports = {
   getVendorsByEventId,
   getEvents,
   updateEvent,
-  deleteEvent
+  deleteEvent,
+  getBudgetItemsCostByEventId,
+  getEventsAnalytics
 };
 
 function getEvents() {
@@ -83,4 +85,36 @@ function deleteEvent(id) {
   return db("events")
     .where("id", id)
     .del();
+}
+
+// ANALYTICS
+async function getBudgetItemsCostByEventId(id) {
+  const budgetItems = await getBudgetItemsByEventId(id);
+  const sumRemainingBudgetItemsCost = budgetItems
+    .filter(item => item.completed === 0)
+    .map(item => {
+      return item.cost * (item.quantity === null ? 1 : item.quantity);
+    })
+    .reduce((acc, cost) => acc + cost, 0);
+
+  const sumCompletedBudgetItemsCost = budgetItems
+    .filter(item => item.completed === 1)
+    .map(item => {
+      return item.cost * (item.quantity === null ? 1 : item.quantity);
+    })
+    .reduce((acc, cost) => acc + cost, 0);
+
+  return {
+    event_id: id,
+    sum_total_items_cost:
+      sumRemainingBudgetItemsCost + sumCompletedBudgetItemsCost,
+    sum_completed_items_cost: sumCompletedBudgetItemsCost,
+    sum_remaining_items_cos: sumRemainingBudgetItemsCost
+  };
+}
+
+function getEventsAnalytics() {
+  return getEvents()
+    .count("* as count_events")
+    .avg("budget as average_budget");
 }
