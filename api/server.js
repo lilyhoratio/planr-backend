@@ -24,6 +24,8 @@ server.use(`/api/users-events`, usersEventsRouter);
 server.use(`/api/budget-items`, budgetItemsRouter);
 server.use(`/api/vendors`, vendorsRouter);
 
+server.use(`/docs`, express.static("./docs"));
+
 server.get("/", (req, res) => {
   res.status(200).json({ message: "Server up and running!" });
 });

@@ -99,3 +99,6 @@ public
 
 # DB
 *.db3
+
+# exclude apidocs
+docs/

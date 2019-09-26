@@ -10,6 +10,7 @@ module.exports = {
 };
 
 function getItems(options) {
+  // SELECT * FROM shopper_list_items ORDER BY ${sortBy} ${sortDir}
   let query = db("shopping_list_items");
   if (options.limit) {
     query = query.limit(parseInt(options.limit, 10));
