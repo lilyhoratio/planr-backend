@@ -7,7 +7,8 @@
     "test": "cross-env DB_ENV=testing jest --watch --runInBand",
     "start": "node index.js",
     "server": "nodemon index.js",
-    "docs": "npx apidoc -i ./ -e node_modules -o ./docs"
+    "docs": "npx apidoc -i ./ -e node_modules -o ./docs",
+    "docs-heroku": "apidoc -i ./ -o ./docs"
   },
   "repository": {
     "type": "git",
