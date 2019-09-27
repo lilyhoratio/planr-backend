@@ -49,9 +49,9 @@ function getEventById(id) {
 
 function getBudgetItemsByEventId(id) {
   return db("events as e")
-    .select("sli.name", "sli.cost", "sli.completed", "sli.quantity")
-    .leftJoin("shopping_list_items AS sli", {
-      "e.id": "sli.event_id"
+    .select("bi.name", "bi.cost", "bi.completed", "bi.quantity")
+    .leftJoin("budget_items AS bi", {
+      "e.id": "bi.event_id"
     })
     .where({ event_id: id });
 }
@@ -59,11 +59,11 @@ function getBudgetItemsByEventId(id) {
 function getVendorsByEventId(id) {
   return db("events AS e")
     .select("v.id", "v.name", "v.type")
-    .leftJoin("shopping_list_items AS sli", {
-      "e.id": "sli.event_id"
+    .leftJoin("budget_items AS bi", {
+      "e.id": "bi.event_id"
     })
     .leftJoin("vendors AS v", {
-      "v.id": "sli.vendor_id"
+      "v.id": "bi.vendor_id"
     })
     .where({ event_id: id });
 }

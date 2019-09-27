@@ -73,7 +73,7 @@ exports.up = function(knex) {
         .notNullable();
       vendors.string("type");
     })
-    .createTable("shopping_list_items", items => {
+    .createTable("budget_items", items => {
       // id (pk), name, cost, completed, event_id (fk - events.id), vendor_id (fk can be null - vendors.id)
       items.increments();
       items.string("name").notNullable();
@@ -104,7 +104,7 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   // drop tables with foreign key before table it references
   return knex.schema
-    .dropTableIfExists("shopping_list_items")
+    .dropTableIfExists("budget_items")
     .dropTableIfExists("vendors")
     .dropTableIfExists("users_events")
     .dropTableIfExists("events")

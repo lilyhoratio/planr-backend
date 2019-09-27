@@ -1,8 +1,8 @@
 exports.seed = function(knex) {
-  return knex("shopping_list_items")
-    .truncate()
+  return knex("budget_items")
+    .del()
     .then(function() {
-      return knex("shopping_list_items").insert([
+      return knex("budget_items").insert([
         {
           id: 1,
           event_id: 1,
