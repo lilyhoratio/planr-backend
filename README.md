@@ -24,11 +24,9 @@ The server is hosted at: [https://planr-backend.herokuapp.com/](https://planr-ba
 
 ---
 
-<LINKTOAPIDOCS>
-
 ### General
 
-http://localhost:8000/api/users
+[http://localhost:8000/docs](http://localhost:8000/docs)
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :x:
@@ -77,5 +75,3 @@ http://localhost:8000/api/users/:id
 - Authorization gets validated over restricted middleware - extra responses below
 - USER ID gets validated over validateUserId middleware - extra responses below
 - No passwords are returned they are not even stored in the database directly
-
-ApiDocs: [http://localhost:8000/docs/](http://localhost:8000/docs/)
