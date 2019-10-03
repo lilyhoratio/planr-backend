@@ -58,6 +58,10 @@ function addUser(user) {
     .then(([id]) => getUserById(id));
 }
 
+// event exists
+// on invite acceptance, insert user into users table >> user created successfully
+// accepted invite, insert user into user_events - pending
+
 function updateUser(changes, id) {
   return db("users")
     .where("id", id)

@@ -9,8 +9,7 @@ module.exports = {
   getEvents,
   updateEvent,
   deleteEvent,
-  getBudgetItemsCostByEventId,
-  getEventsAnalytics
+  getBudgetItemsCostByEventId
 };
 
 function getEvents() {
@@ -49,7 +48,7 @@ function getEventById(id) {
 
 function getBudgetItemsByEventId(id) {
   return db("events as e")
-    .select("bi.name", "bi.cost", "bi.completed", "bi.quantity")
+    .select("bi.id", "bi.name", "bi.cost", "bi.completed", "bi.quantity")
     .leftJoin("budget_items AS bi", {
       "e.id": "bi.event_id"
     })
@@ -88,6 +87,7 @@ function deleteEvent(id) {
 }
 
 // ANALYTICS
+
 async function getBudgetItemsCostByEventId(id) {
   const budgetItems = await getBudgetItemsByEventId(id);
   const sumRemainingBudgetItemsCost = budgetItems
@@ -111,10 +111,4 @@ async function getBudgetItemsCostByEventId(id) {
     sum_completed_items_cost: sumCompletedBudgetItemsCost,
     sum_remaining_items_cos: sumRemainingBudgetItemsCost
   };
-}
-
-function getEventsAnalytics() {
-  return getEvents()
-    .count("* as count_events")
-    .avg("budget as average_budget");
 }

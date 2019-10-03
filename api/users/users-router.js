@@ -113,6 +113,7 @@ router.post("/login", (req, res) => {
         res.status(200).json({
           message: `Welcome ${user.name}!`,
           user_id: user.id,
+          role_id: user.role_id,
           token
         });
       } else {
@@ -120,6 +121,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res
         .status(500)
         .json({ message: "Error occurred while logging in.", err });
@@ -242,5 +244,12 @@ router.delete("/:id", Auth.restricted, Validate.validateUserId, (req, res) => {
         .json({ message: "Error occurred while deleting user.", err });
     });
 });
+
+// GET /api/user/logout
+// router.get('/logout', restricted, (request, response) => {
+//   request.session.destroy(() => {
+//     response.status(200).json({ message: 'You have been logged out' })
+//   })
+// })
 
 module.exports = router;

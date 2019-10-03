@@ -18,6 +18,24 @@ module.exports = {
     }
   },
 
+  // Using Postgres results in: "Error: duplicate key value violates unique constraint "users_pkey""
+  // POSTGRES
+  // development: {
+  //   client: "pg",
+  //   connection: {
+  //     database: "postgres",
+  //     port: 6432,
+  //     user: "postgres",
+  //     password: process.env.POSTGRES_PASSWORD || "docker"
+  //   },
+  //   migrations: {
+  //     directory: "./data/migrations"
+  //   },
+  //   seeds: {
+  //     directory: "./data/seeds"
+  //   }
+  // },
+
   testing: {
     client: "sqlite3",
     connection: {

@@ -35,7 +35,7 @@ const router = express.Router();
  *   },
  * ]
  */
-
+//api/events/
 router.get("/", (req, res) => {
   Events.getEvents()
     .then(events => {

@@ -91,7 +91,7 @@ function validateLogin(req, res, next) {
 
 function validateEvent(req, res, next) {
   const e = req.body;
-
+  console.log(e);
   // only applies when creating an item, not when updating - want to check for valid keys for put request
   if (!e.created_by || !e.name || !e.budget || !e.start_date) {
     return res.status(400).json({
