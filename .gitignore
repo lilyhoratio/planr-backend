@@ -101,4 +101,4 @@ public
 *.db3
 
 # exclude apidocs
-docs/
+# docs/
