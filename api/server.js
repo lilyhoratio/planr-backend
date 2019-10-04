@@ -42,7 +42,8 @@ server.use(`/api/budget-items`, budgetItemsRouter);
 server.use(`/api/vendors`, vendorsRouter);
 server.use(`/api/metrics`, metricsRouter);
 
-server.use(`/docs`, express.static(__dirname + "./docs"));
+console.log(__dirname);
+server.use(`/`, express.static(__dirname + `docs`));
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "Server up and running!" });
