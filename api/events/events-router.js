@@ -127,6 +127,7 @@ router.post("/", Validate.validateEvent, (req, res) => {
       res.status(201).json(newEvent);
     })
     .catch(err => {
+      console.log("ADD NEW EVENT ERROR:", err);
       res
         .status(500)
         .json({ message: "Error occurred while adding a new event.", err });

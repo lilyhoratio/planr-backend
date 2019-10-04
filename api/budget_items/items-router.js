@@ -111,7 +111,7 @@ router.post("/", (req, res) => {
       res.status(201).json(formattedItem);
     })
     .catch(err => {
-      console.log(err);
+      console.log("ADD BUDGET ITEM ERROR: ", err.message);
       res
         .status(500)
         .json({ message: "Error occurred while adding a new item.", err });
