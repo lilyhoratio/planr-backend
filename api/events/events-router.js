@@ -137,7 +137,7 @@ router.post("/", Validate.validateEvent, (req, res) => {
 router.put(
   "/:id",
   Validate.validateEventId,
-  Validate.validateEvent,
+  // Validate.validateEvent,
   (req, res) => {
     const { id } = req.params;
     const changes = req.body;

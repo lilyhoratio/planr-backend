@@ -46,10 +46,11 @@ router.post(
     Users.addUser(user)
       .then(newUser => {
         const token = Auth.generateToken(newUser);
-
+        console.log(newUser);
         res.status(201).json({
           message: `Welcome ${newUser.name}!`,
           user_id: newUser.id,
+          role_name: newUser.role_name,
           token
         });
       })
@@ -117,14 +118,12 @@ router.post("/login", (req, res) => {
           token
         });
       } else {
-        res.status(401).json({ message: "Invalid credentials." });
+        res.status(401).json({ message: "Incorrect credentials." });
       }
     })
     .catch(err => {
       console.log(err);
-      res
-        .status(500)
-        .json({ message: "Error occurred while logging in.", err });
+      res.status(500).send({ message: "Error occurred while logging in." });
     });
 });
 
