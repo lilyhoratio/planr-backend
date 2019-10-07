@@ -22,8 +22,9 @@ module.exports = {
   development: {
     client: "pg",
     connection: {
-      database: "postgres",
-      port: 6432,
+      host: "db",
+      database: "corporate-events",
+      port: 5432,
       user: "postgres",
       password: process.env.POSTGRES_PASSWORD || "docker"
     },
