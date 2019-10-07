@@ -1,32 +1,14 @@
 module.exports = {
-  development: {
-    client: "sqlite3",
-    useNullAsDefault: true,
-    connection: {
-      filename: "./data/corporate-events.db3"
-    },
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      }
-    },
-    migrations: {
-      directory: "./data/migrations"
-    },
-    seeds: {
-      directory: "./data/seeds"
-    }
-  },
-
-  // Using Postgres results in: "Error: duplicate key value violates unique constraint "users_pkey""
-  // POSTGRES
   // development: {
-  //   client: "pg",
+  //   client: "sqlite3",
+  //   useNullAsDefault: true,
   //   connection: {
-  //     database: "postgres",
-  //     port: 6432,
-  //     user: "postgres",
-  //     password: process.env.POSTGRES_PASSWORD || "docker"
+  //     filename: "./data/corporate-events.db3"
+  //   },
+  //   pool: {
+  //     afterCreate: (conn, done) => {
+  //       conn.run("PRAGMA foreign_keys = ON", done);
+  //     }
   //   },
   //   migrations: {
   //     directory: "./data/migrations"
@@ -35,6 +17,23 @@ module.exports = {
   //     directory: "./data/seeds"
   //   }
   // },
+
+  // Using Postgres results in: "Error: duplicate key value violates unique constraint "users_pkey"" >> remove PK ids from seed files
+  development: {
+    client: "pg",
+    connection: {
+      database: "postgres",
+      port: 6432,
+      user: "postgres",
+      password: process.env.POSTGRES_PASSWORD || "docker"
+    },
+    migrations: {
+      directory: "./data/migrations"
+    },
+    seeds: {
+      directory: "./data/seeds"
+    }
+  },
 
   testing: {
     client: "sqlite3",
