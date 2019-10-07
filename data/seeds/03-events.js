@@ -1,7 +1,6 @@
 exports.seed = function(knex) {
   return knex("events").insert([
     {
-      id: 1,
       created_by: 1,
       name: "Company party",
       description: "A company-wide party",
@@ -11,7 +10,6 @@ exports.seed = function(knex) {
       end_date: "2019-01-23"
     },
     {
-      id: 2,
       created_by: 1,
       name: "Company luncheon",
       description: "A company-wide lunch",
@@ -21,7 +19,6 @@ exports.seed = function(knex) {
       end_date: null
     },
     {
-      id: 3,
       created_by: 1,
       name: "Surprise Birthday",
       description: "A surprise birthday party for the ceo",
@@ -31,7 +28,6 @@ exports.seed = function(knex) {
       end_date: "2019-03-05"
     },
     {
-      id: 4,
       created_by: 2,
       name: "Kelly's baby shower",
       description:
@@ -42,7 +38,6 @@ exports.seed = function(knex) {
       end_date: null
     },
     {
-      id: 5,
       created_by: 2,
       name: "Product launch",
       description: "First launch of the company product.",

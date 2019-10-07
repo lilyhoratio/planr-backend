@@ -4,7 +4,6 @@ exports.seed = function(knex) {
     .then(function() {
       return knex("budget_items").insert([
         {
-          id: 1,
           event_id: 1,
           name: "Room rental",
           vendor_id: 1,
@@ -13,7 +12,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 2,
           event_id: 1,
           name: "picnic tables",
           vendor_id: 4,
@@ -22,7 +20,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 3,
           event_id: 1,
           name: "Business catering package",
           vendor_id: 2,
@@ -31,7 +28,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 4,
           event_id: 2,
           name: "drinks",
           vendor_id: 2,
@@ -40,7 +36,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 5,
           event_id: 3,
           name: "Burritos",
           vendor_id: 2,
@@ -49,7 +44,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 6,
           event_id: 2,
           name: "napkins",
           vendor_id: 4,
@@ -58,7 +52,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 7,
           event_id: 1,
           name: "Rental buses",
           vendor_id: 3,
@@ -67,7 +60,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 8,
           event_id: 3,
           name: "Rental buses",
           vendor_id: 3,
@@ -76,7 +68,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 9,
           event_id: 4,
           name: "balloons",
           vendor_id: 4,
@@ -85,7 +76,6 @@ exports.seed = function(knex) {
           completed: false
         },
         {
-          id: 10,
           event_id: 3,
           name: "Room rental",
           vendor_id: 1,
